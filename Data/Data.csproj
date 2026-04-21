@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Configuraciones\AntecedenteConfiguracion.cs" />
+    <Compile Remove="Configuraciones\EspecialidadConfiguracion.cs" />
+    <Compile Remove="Configuraciones\HistoriaClinicaConfiguracion.cs" />
+    <Compile Remove="Configuraciones\MedicoConfiguracion.cs" />
+    <Compile Remove="Configuraciones\PacienteConfiguracion.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Configuraciones\HistoriaClinicaConfiguracion.cs" />
+    <None Include="Configuraciones\AntecedenteConfiguracion.cs" />
+    <None Include="Configuraciones\PacienteConfiguracion.cs" />
+    <None Include="Configuraciones\MedicoConfiguracion.cs" />
+    <None Include="Configuraciones\EspecialidadConfiguracion.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
+
+</Project>
