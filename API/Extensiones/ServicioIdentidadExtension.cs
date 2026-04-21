@@ -12,6 +12,12 @@ namespace API.Extensiones
     {
         public static IServiceCollection AgregarServiciosIdentidad(this IServiceCollection services, IConfiguration config) 
         {
+            var tokenKey = config["TokenKey"];
+            if (string.IsNullOrWhiteSpace(tokenKey))
+            {
+                throw new InvalidOperationException("La configuración TokenKey no está definida.");
+            }
+
             services.AddIdentityCore<UsuarioAplicacion>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
@@ -28,7 +34,7 @@ namespace API.Extensiones
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey
-                                (Encoding.UTF8.GetBytes(config["TokenKey"])),
+                                (Encoding.UTF8.GetBytes(tokenKey)),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };

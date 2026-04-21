@@ -1,0 +1,1 @@
+Use a TokenKey value of at least 32 characters in Render. This build signs JWTs with HS256 for broader compatibility.
