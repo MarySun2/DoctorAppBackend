@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BJDw396jaqo=",
+  "dgSpecHash": "bX7DAjl7x3Q=",
   "success": true,
-  "projectFilePath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\BLL\\BLL.csproj",
+  "projectFilePath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\BLL\\BLL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\maris\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\maris\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",

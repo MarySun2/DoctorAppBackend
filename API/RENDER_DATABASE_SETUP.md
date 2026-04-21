@@ -1,31 +1,27 @@
-# Render + PostgreSQL
+# Configuración de base de datos para Render
+
+Este backend quedó ajustado para poder funcionar con **PostgreSQL en Render** sin cambiar la lógica principal de la app.
 
 ## Variables de entorno en Render
 
-- `DatabaseProvider=PostgreSQL`
-- `ConnectionStrings__DefaultConnection=Host=...;Port=5432;Database=...;Username=...;Password=...;SSL Mode=Require;Trust Server Certificate=true`
-- `TokenKey=tu_clave_larga`
-- `ASPNETCORE_ENVIRONMENT=Production`
+Crea estas variables en tu servicio web:
 
-## Importante
+- `DatabaseProvider` = `PostgreSQL`
+- `ConnectionStrings__DefaultConnection` = tu cadena de conexión PostgreSQL completa
+- `TokenKey` = tu clave JWT
+- `ASPNETCORE_ENVIRONMENT` = `Production`
 
-Este proyecto está preparado para PostgreSQL en Render sin ejecutar `dotnet ef database update` dentro de Render.
+## Cadena de conexión ejemplo
 
-Al iniciar:
-- si detecta PostgreSQL y no existe `AspNetUsers`, crea el esquema con `EnsureCreatedAsync()`
-- luego crea roles y el usuario administrador
+```text
+Host=dpg-xxxx.render.com;Port=5432;Database=doctorapp;Username=doctorapp_user;Password=tu_password;SSL Mode=Require;Trust Server Certificate=true
+```
 
-## Usuario administrador inicial
+## Desarrollo local con SQL Server
 
-- usuario: `administrador`
-- contraseña: `Admin123`
+No se rompió el modo local: puedes seguir usando `appsettings.Development.json` con SQL Server.
 
-## Endpoint útil para verificar
+## Nota técnica
 
-- `/db-status`
-
-Debe devolver `existeAspNetUsers: true` cuando la base ya quedó creada.
-
-## Recomendación
-
-Para evitar estados raros, usa una base PostgreSQL nueva y vacía en Render antes del primer deploy.
+- En PostgreSQL, al iniciar en Render, el backend usa `EnsureCreated()` para crear las tablas si no existen.
+- En SQL Server, sigue usando migraciones (`Migrate()`).

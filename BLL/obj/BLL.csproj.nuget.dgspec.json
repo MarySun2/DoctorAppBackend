@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\BLL\\BLL.csproj": {}
+    "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\BLL\\BLL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\BLL\\BLL.csproj": {
+    "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\BLL\\BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\BLL\\BLL.csproj",
+        "projectUniqueName": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\BLL\\BLL.csproj",
         "projectName": "BLL",
-        "projectPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\BLL\\BLL.csproj",
+        "projectPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\BLL\\BLL.csproj",
         "packagesPath": "C:\\Users\\maris\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\BLL\\obj\\",
+        "outputPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\BLL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,14 +32,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Data\\Data.csproj": {
-                "projectPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Data\\Data.csproj"
+              "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Data\\Data.csproj": {
+                "projectPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Data\\Data.csproj"
               },
-              "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj": {
-                "projectPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj"
+              "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj"
               },
-              "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Utilidades\\Utilidades.csproj": {
-                "projectPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Utilidades\\Utilidades.csproj"
+              "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Utilidades\\Utilidades.csproj": {
+                "projectPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Utilidades\\Utilidades.csproj"
               }
             }
           }
@@ -79,14 +79,14 @@
         }
       }
     },
-    "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Data\\Data.csproj": {
+    "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Data\\Data.csproj",
+        "projectUniqueName": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Data\\Data.csproj",
+        "projectPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Data\\Data.csproj",
         "packagesPath": "C:\\Users\\maris\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Data\\obj\\",
+        "outputPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -107,8 +107,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj": {
-                "projectPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj"
+              "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj"
               }
             }
           }
@@ -182,14 +182,14 @@
         }
       }
     },
-    "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj": {
+    "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj",
+        "projectUniqueName": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj",
         "projectName": "Models",
-        "projectPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj",
+        "projectPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj",
         "packagesPath": "C:\\Users\\maris\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\obj\\",
+        "outputPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -253,14 +253,14 @@
         }
       }
     },
-    "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Utilidades\\Utilidades.csproj": {
+    "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Utilidades\\Utilidades.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Utilidades\\Utilidades.csproj",
+        "projectUniqueName": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Utilidades\\Utilidades.csproj",
         "projectName": "Utilidades",
-        "projectPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Utilidades\\Utilidades.csproj",
+        "projectPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Utilidades\\Utilidades.csproj",
         "packagesPath": "C:\\Users\\maris\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Utilidades\\obj\\",
+        "outputPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Utilidades\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -281,8 +281,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj": {
-                "projectPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj"
+              "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj": {
+                "projectPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj"
               }
             }
           }

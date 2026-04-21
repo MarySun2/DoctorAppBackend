@@ -821,11 +821,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj",
+      "projectUniqueName": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj",
       "projectName": "Models",
-      "projectPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\Models.csproj",
+      "projectPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\Models.csproj",
       "packagesPath": "C:\\Users\\maris\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\maris\\Downloads\\DoctorAppBackend-Render-Listo\\DoctorAppBackend-1\\Models\\obj\\",
+      "outputPath": "C:\\Users\\maris\\Downloads\\cc\\DoctorAppBackend\\Models\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

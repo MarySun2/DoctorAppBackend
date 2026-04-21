@@ -1,6 +1,5 @@
 using API.Extensiones;
 using API.Middleware;
-using Data;
 using Data.Inicializador;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,9 +17,11 @@ app.UseStatusCodePagesWithReExecute("/errores/{0}");
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
+
 app.UseCors(x => x.AllowAnyOrigin()
                   .AllowAnyMethod()
                   .AllowAnyHeader());
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -28,41 +29,54 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var logger = services.GetRequiredService<ILogger<Program>>();
+
     try
     {
-        logger.LogInformation("Iniciando proceso de inicialización de base de datos...");
+        logger.LogInformation("Iniciando inicialización de base de datos...");
         var inicializador = services.GetRequiredService<IdbInicializador>();
         await inicializador.Inicializar();
-        logger.LogInformation("Inicialización de base de datos completada correctamente.");
+        logger.LogInformation("Inicialización de base de datos finalizada.");
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "Error ocurrido al inicializar la base de datos");
+        logger.LogError(ex, "Falló la inicialización de la base de datos.");
+        throw;
     }
 }
 
-app.MapGet("/", () => Results.Ok("API funcionando"));
-app.MapGet("/db-status", async (ApplicationDbContext db) =>
+app.MapGet("/", () => "API funcionando");
+
+app.MapGet("/db-status", async (ApplicationDbContext db, IConfiguration config) =>
 {
     var provider = db.Database.ProviderName ?? "desconocido";
-    var existeAspNetUsers = false;
+    var connection = db.Database.GetDbConnection();
+    await connection.OpenAsync();
     try
     {
-        existeAspNetUsers = await db.Database
-            .SqlQueryRaw<bool>("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'AspNetUsers')")
-            .SingleAsync();
-    }
-    catch
-    {
-    }
+        await using var cmd = connection.CreateCommand();
+        cmd.CommandText = @"
+            SELECT EXISTS (
+                SELECT 1
+                FROM information_schema.tables
+                WHERE table_schema = 'public'
+                  AND table_name = 'AspNetUsers'
+            );";
 
-    return Results.Ok(new
+        var result = await cmd.ExecuteScalarAsync();
+        var exists = result is bool value && value;
+
+        return Results.Ok(new
+        {
+            provider,
+            existeAspNetUsers = exists,
+            databaseProviderConfig = config["DatabaseProvider"]
+        });
+    }
+    finally
     {
-        provider,
-        existeAspNetUsers,
-        databaseProviderConfig = builder.Configuration["DatabaseProvider"]
-    });
+        await connection.CloseAsync();
+    }
 });
-app.MapControllers();
 
+app.MapControllers();
 app.Run();

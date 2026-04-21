@@ -1,7 +1,9 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Models.Entidades;
+using Npgsql;
+using System.Data.Common;
 
 namespace Data.Inicializador
 {
@@ -26,113 +28,129 @@ namespace Data.Inicializador
 
         public async Task Inicializar()
         {
-            var provider = _db.Database.ProviderName ?? string.Empty;
-            _logger.LogInformation("Inicializando base de datos. Provider detectado: {Provider}", provider);
+            var providerName = _db.Database.ProviderName ?? string.Empty;
+            _logger.LogInformation("Iniciando inicialización de base de datos. Provider: {Provider}", providerName);
 
-            if (provider.Contains("Npgsql", StringComparison.OrdinalIgnoreCase))
+            if (providerName.Contains("Npgsql", StringComparison.OrdinalIgnoreCase))
             {
                 await InicializarPostgreSqlAsync();
             }
             else
             {
-                await InicializarConMigracionesAsync();
+                await InicializarSqlServerAsync();
             }
 
-            await CrearRolesAsync();
-            await CrearUsuarioAdministradorAsync();
+            await CrearDatosSemillaAsync();
+            _logger.LogInformation("Inicialización de base de datos completada correctamente.");
         }
 
         private async Task InicializarPostgreSqlAsync()
         {
-            var aspNetUsersExiste = await TablaExisteAsync("AspNetUsers");
-            if (!aspNetUsersExiste)
+            await _db.Database.OpenConnectionAsync();
+            try
             {
-                _logger.LogInformation("La tabla AspNetUsers no existe. Creando esquema completo con EnsureCreatedAsync().");
-                await _db.Database.EnsureCreatedAsync();
+                var existsBefore = await ExisteTablaAspNetUsersAsync(_db.Database.GetDbConnection());
+                _logger.LogInformation("Estado inicial PostgreSQL. Existe AspNetUsers: {Exists}", existsBefore);
+
+                if (!existsBefore)
+                {
+                    _logger.LogInformation("AspNetUsers no existe. Ejecutando EnsureCreatedAsync para PostgreSQL...");
+                    await _db.Database.EnsureCreatedAsync();
+                }
+
+                var existsAfter = await ExisteTablaAspNetUsersAsync(_db.Database.GetDbConnection());
+                _logger.LogInformation("Estado final PostgreSQL. Existe AspNetUsers: {Exists}", existsAfter);
+
+                if (!existsAfter)
+                {
+                    throw new InvalidOperationException("No se pudo crear la tabla AspNetUsers en PostgreSQL.");
+                }
             }
-            else
+            finally
             {
-                _logger.LogInformation("La tabla AspNetUsers ya existe en PostgreSQL.");
+                await _db.Database.CloseConnectionAsync();
             }
         }
 
-        private async Task InicializarConMigracionesAsync()
+        private async Task InicializarSqlServerAsync()
         {
-            var pendientes = await _db.Database.GetPendingMigrationsAsync();
-            if (pendientes.Any())
+            if ((await _db.Database.GetPendingMigrationsAsync()).Any())
             {
-                _logger.LogInformation("Aplicando migraciones pendientes: {Cantidad}", pendientes.Count());
+                _logger.LogInformation("Aplicando migraciones pendientes en SQL Server...");
                 await _db.Database.MigrateAsync();
             }
-            else
+        }
+
+        private async Task<bool> ExisteTablaAspNetUsersAsync(DbConnection connection)
+        {
+            await using var cmd = connection.CreateCommand();
+            cmd.CommandText = @"
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM information_schema.tables
+                    WHERE table_schema = 'public'
+                      AND table_name = 'AspNetUsers'
+                );";
+
+            var result = await cmd.ExecuteScalarAsync();
+            return result is bool exists && exists;
+        }
+
+        private async Task CrearDatosSemillaAsync()
+        {
+            if (await _roleManager.FindByNameAsync("Admin") == null)
             {
-                _logger.LogInformation("No hay migraciones pendientes.");
+                _logger.LogInformation("Creando roles iniciales...");
+                await CrearRolSiNoExisteAsync("Admin");
+                await CrearRolSiNoExisteAsync("Agendador");
+                await CrearRolSiNoExisteAsync("Doctor");
             }
-        }
 
-        private async Task<bool> TablaExisteAsync(string tableName)
-        {
-            const string sql = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = {0})";
-            return await _db.Database.SqlQueryRaw<bool>(sql, tableName).SingleAsync();
-        }
-
-        private async Task CrearRolesAsync()
-        {
-            string[] roles = ["Admin", "Agendador", "Doctor"];
-
-            foreach (var role in roles)
-            {
-                if (await _roleManager.FindByNameAsync(role) != null)
-                {
-                    continue;
-                }
-
-                var resultadoRol = await _roleManager.CreateAsync(new RolAplicacion { Name = role });
-                if (!resultadoRol.Succeeded)
-                {
-                    throw new InvalidOperationException($"No se pudo crear el rol {role}: {string.Join(", ", resultadoRol.Errors.Select(e => e.Description))}");
-                }
-
-                _logger.LogInformation("Rol creado correctamente: {Role}", role);
-            }
-        }
-
-        private async Task CrearUsuarioAdministradorAsync()
-        {
             var usuarioAdmin = await _userManager.FindByNameAsync("administrador");
-
             if (usuarioAdmin == null)
             {
+                _logger.LogInformation("Creando usuario administrador por defecto...");
                 usuarioAdmin = new UsuarioAplicacion
                 {
                     UserName = "administrador",
                     Email = "administrador@doctorapp.com",
                     Apellidos = "Piedra",
-                    Nombres = "Carlos"
+                    Nombres = "Carlos",
+                    EmailConfirmed = true
                 };
 
-                var resultadoUsuario = await _userManager.CreateAsync(usuarioAdmin, "Admin123");
-                if (!resultadoUsuario.Succeeded)
+                var createResult = await _userManager.CreateAsync(usuarioAdmin, "Admin123");
+                if (!createResult.Succeeded)
                 {
-                    throw new InvalidOperationException($"No se pudo crear el usuario administrador: {string.Join(", ", resultadoUsuario.Errors.Select(e => e.Description))}");
+                    var errores = string.Join(", ", createResult.Errors.Select(e => e.Description));
+                    throw new InvalidOperationException($"No se pudo crear el usuario administrador: {errores}");
                 }
-
-                _logger.LogInformation("Usuario administrador creado correctamente.");
-            }
-            else
-            {
-                _logger.LogInformation("El usuario administrador ya existe.");
             }
 
             if (!await _userManager.IsInRoleAsync(usuarioAdmin, "Admin"))
             {
-                var resultadoRol = await _userManager.AddToRoleAsync(usuarioAdmin, "Admin");
-                if (!resultadoRol.Succeeded)
+                _logger.LogInformation("Asignando rol Admin al usuario administrador...");
+                var addRoleResult = await _userManager.AddToRoleAsync(usuarioAdmin, "Admin");
+                if (!addRoleResult.Succeeded)
                 {
-                    throw new InvalidOperationException($"No se pudo asignar el rol Admin al usuario administrador: {string.Join(", ", resultadoRol.Errors.Select(e => e.Description))}");
+                    var errores = string.Join(", ", addRoleResult.Errors.Select(e => e.Description));
+                    throw new InvalidOperationException($"No se pudo asignar el rol Admin: {errores}");
                 }
+            }
+        }
 
-                _logger.LogInformation("Rol Admin asignado al usuario administrador.");
+        private async Task CrearRolSiNoExisteAsync(string nombreRol)
+        {
+            if (await _roleManager.FindByNameAsync(nombreRol) != null)
+            {
+                return;
+            }
+
+            var result = await _roleManager.CreateAsync(new RolAplicacion { Name = nombreRol });
+            if (!result.Succeeded)
+            {
+                var errores = string.Join(", ", result.Errors.Select(e => e.Description));
+                throw new InvalidOperationException($"No se pudo crear el rol {nombreRol}: {errores}");
             }
         }
     }
